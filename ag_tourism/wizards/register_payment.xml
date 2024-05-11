@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="register_payment_wizard_view" model="ir.iu.view">
+        <field name="name">register.payment.wizard.view</field>
+        <field name="model">register.payment.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                
+                <gruop col="4">
+                    <field name="booking_id" invisible="1"/>
+                    <field name="payment_method"/>
+                    <field name="amount"/>
+                </gruop> 
+                <footer>
+                    <button string="Register payment" special="action_register" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"/>
+                </footer>
+
+            </form>
+        </field>
+    </record>

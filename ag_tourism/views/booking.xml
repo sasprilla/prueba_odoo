@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_booking_kanban" model="ir.ui.view">
+        <field name="name">booking</field>
+        <field name="model">booking</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" sample="1">
+                <field name="state"/>
+                <field name="partner_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="attraction_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card">
+                            <div class="o_kanban_content">
+                                <field name="state"/>
+                                <field name="partner_id"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="attraction_id"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_booking_form" model="ir.iu.view">
+        <field name="name">booking</field>
+        <field name="model">booking</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="state"/>
+
+                    <button type="object" name="action_register_payment" class="btn btn-primary">
+                        <span>Register payment</span>
+                    </button>
+
+                    <button type="object" name="action_create_invoice" class="btn btn-primary" groups="ag_tourism.group_admin_booking"
+                    states="reserved">
+                        <span>Invoice</span>
+                    </button>
+
+                </header>
+                <gruop col="4">
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="attraction_id"/>
+                <field name="num_passengers"/>
+                
+                <field name="mode_transportation"/>
+                <field name="payment_method" readonly="1"/>
+                <field name="initial_amount" readonly="1"/>
+                </gruop>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_booking_pivot" model="ir.ui.view">
+        <field name="name">booking</field>
+        <field name="model">booking</field>
+        <field name="arch" type="xml">
+            <pivot string="Bookin Analysis" sample="1">
+                <field name="start_date" interval="day" type="row"/>
+                <field name="end_date" interval="day" type="row"/>
+                <field name="partner_id" type="row" />
+                <field name="attraction_id" type="row"/>
+                <field name="user_id" type="row"/>
+                <field name="num_passengers" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_booking" model="ir.actions.act_window">
+        <field name="name">Booking</field>
+        <field name="res_model">booking</field>
+        <field name="view_mode">kanban,form,pivot</field>
+        <field name="view_id" ref="view_booking_kanban"/>
+    </record>
+
+    <menuitem name="Tourism" id="menu_tourism" web_icon="ag_tourism,static/description/icon.png" />
+
+    <menuitem name="Booking"
+              parent="ag_tourism.menu_tourism"
+              id="menu_booking"
+              action="action_booking"
+              groups="base.group_no_one"/>
+
+    </record>
+
+</data>
